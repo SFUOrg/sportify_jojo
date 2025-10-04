@@ -1,0 +1,2 @@
+### Figma [link](https://www.figma.com/design/JLQgQp7JrHm99F3DlKZSFL/Untitled?node-id=38-330&t=ZtfzGnc90vZEp2kn-1)
+### DB scheme [link](https://drive.google.com/file/d/1isguAih4nY0rbF-FvKeaWIyF5XrOR8Qg/view?usp=sharing)
