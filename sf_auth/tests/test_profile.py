@@ -27,33 +27,33 @@ class ProfileModelTest(TestCase):
 
     def test_profile_creation_generates_uuid(self):
         """Тест: UUID генерируется автоматически и является уникальным"""
-        profile = Profile.objects.create(user=self.user)
+        profile = Profile.objects.get_or_create(user=self.user)
         self.assertIsInstance(profile.uuid, uuid.UUID)
         self.assertIsNotNone(profile.uuid)
 
     def test_profile_str_method(self):
         """Тест: метод __str__ возвращает ожидаемую строку"""
-        profile = Profile.objects.create(user=self.user)
+        profile = Profile.objects.get_or_create(user=self.user)
         self.assertEqual(str(profile), f"Profile of {self.user.username}")
 
     def test_profile_one_to_one_with_user(self):
         """Тест: связь OneToOne с User работает в обе стороны"""
-        profile = Profile.objects.create(user=self.user)
+        profile = Profile.objects.get_or_create(user=self.user)
         self.assertEqual(profile.user, self.user)
         self.assertEqual(self.user.profile, profile)
 
     def test_telegram_id_is_unique(self):
         """Тест: telegram_id должен быть уникальным"""
         telegram_id = 123456789
-        Profile.objects.create(user=self.user, telegram_id=telegram_id)
+        Profile.objects.get_or_create(user=self.user, telegram_id=telegram_id)
 
         user2 = User.objects.create_user(username='user2', password='pass')
         with self.assertRaises(IntegrityError):
-            Profile.objects.create(user=user2, telegram_id=telegram_id)
+            Profile.objects.get_or_create(user=user2, telegram_id=telegram_id)
 
     def test_telegram_id_can_be_null(self):
         """Тест: telegram_id может быть пустым"""
-        profile = Profile.objects.create(user=self.user)
+        profile = Profile.objects.get_or_create(user=self.user)
         self.assertIsNone(profile.telegram_id)
 
     def test_profile_photo_field(self):
@@ -63,12 +63,12 @@ class ProfileModelTest(TestCase):
             content=b'fake image content',
             content_type='image/jpeg'
         )
-        profile = Profile.objects.create(user=self.user, profile_photo=mock_image)
+        profile = Profile.objects.get_or_create(user=self.user, profile_photo=mock_image)
         self.assertTrue(profile.profile_photo.name.startswith('profile_photos/avatar'))
 
     def test_geolocation_fields(self):
         """Тест: поля геолокации сохраняются корректно"""
-        profile = Profile.objects.create(
+        profile = Profile.objects.get_or_create(
             user=self.user,
             latitude=55.7558,
             longitude=37.6176,
@@ -80,7 +80,7 @@ class ProfileModelTest(TestCase):
 
     def test_main_sport_foreign_key(self):
         """Тест: основной вид спорта (main_sport) работает"""
-        profile = Profile.objects.create(
+        profile = Profile.objects.get_or_create(
             user=self.user,
             main_sport=self.sport_category
         )
@@ -90,7 +90,7 @@ class ProfileModelTest(TestCase):
 
     def test_sport_categories_m2m(self):
         """Тест: M2M связь с категориями спорта работает"""
-        profile = Profile.objects.create(user=self.user)
+        profile = Profile.objects.get_or_create(user=self.user)
         profile.sport_categories.add(self.sport_category)
 
         self.assertIn(self.sport_category, profile.sport_categories.all())
@@ -99,7 +99,7 @@ class ProfileModelTest(TestCase):
 
     def test_meetings_m2m(self):
         """Тест: M2M связь с встречами работает"""
-        profile = Profile.objects.create(user=self.user)
+        profile = Profile.objects.get_or_create(user=self.user)
         profile.meetings.add(self.meeting)
 
         self.assertIn(self.meeting, profile.meetings.all())
@@ -107,14 +107,14 @@ class ProfileModelTest(TestCase):
 
     def test_created_at_and_updated_at_auto_set(self):
         """Тест: created_at и updated_at устанавливаются автоматически"""
-        profile = Profile.objects.create(user=self.user)
+        profile = Profile.objects.get_or_create(user=self.user)
         self.assertIsNotNone(profile.created_at)
         self.assertIsNotNone(profile.updated_at)
         self.assertLessEqual(profile.created_at, profile.updated_at)
 
     def test_uuid_is_immutable(self):
         """Тест: UUID не меняется после обновления профиля"""
-        profile = Profile.objects.create(user=self.user)
+        profile = Profile.objects.get_or_create(user=self.user)
         original_uuid = profile.uuid
 
         profile.second_name = "Новое имя"
