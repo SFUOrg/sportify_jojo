@@ -1,0 +1,45 @@
+<!-- templates/bottom_menu.html -->
+{% comment %}
+    Предполагается, что в контексте шаблона есть переменная 'current_view_name',
+    которая содержит имя текущего URL-шаблона (его 'name' из urls.py).
+    Это можно сделать, например, с помощью контекстного процессора.
+    Или передавать 'active_page' из view.
+    Ниже показан пример с 'active_page'.
+{% endcomment %}
+<div class="fixed bottom-0 left-0 right-0 z-10">
+  <div class="flex gap-2 border-t border-[#f2f2f2] bg-white px-4 pb-3 pt-2">
+    <a class="flex flex-1 flex-col items-center justify-end gap-1  {% if active_page == 'map' %}text-[#141414] font-medium {% else %} text-[#757575] {% endif %}" href="{% url 'meetings_map' %}"> <!-- Замените 'map_view_name' на реальный URL name -->
+      <div class="flex h-8 items-center justify-center" data-icon="MapTrifold" data-size="24px" data-weight="regular">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+          <path d="M228.92,49.69a8,8,0,0,0-6.86-1.45L160.93,63.52,99.58,32.84a8,8,0,0,0-5.52-.6l-64,16A8,8,0,0,0,24,56V200a8,8,0,0,0,9.94,7.76l61.13-15.28,61.35,30.68A8.15,8.15,0,0,0,160,224a8,8,0,0,0,1.94-.24l64-16A8,8,0,0,0,232,200V56A8,8,0,0,0,228.92,49.69ZM104,52.94l48,24V203.06l-48-24ZM40,62.25l48-12v127.5l-48,12Zm176,131.5-48,12V78.25l48-12Z"></path>
+        </svg>
+      </div>
+      <p class="text-xs font-medium leading-normal tracking-[0.015em]">Карта</p>
+    </a>
+    <a class="flex flex-1 flex-col items-center justify-end gap-1 {% if active_page == 'list' %}text-[#141414] font-medium {% else %} text-[#757575] {% endif %}" href="{% url 'meetings_list' %}"> <!-- Замените 'list_view_name' -->
+      <div class="flex h-8 items-center justify-center" data-icon="ListBullets" data-size="24px" data-weight="regular">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+          <path d="M80,64a8,8,0,0,1,8-8H216a8,8,0,0,1,0,16H88A8,8,0,0,1,80,64Zm136,56H88a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Zm0,64H88a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16ZM44,52A12,12,0,1,0,56,64,12,12,0,0,0,44,52Zm0,64a12,12,0,1,0,12,12A12,12,0,0,0,44,116Zm0,64a12,12,0,1,0,12,12A12,12,0,0,0,44,180Z"></path>
+        </svg>
+      </div>
+      <p class="text-xs font-medium leading-normal tracking-[0.015em]">Список</p>
+    </a>
+    <a class="flex flex-1 flex-col items-center justify-end gap-1 {% if active_page == 'create' %}text-[#141414] font-medium {% else %} text-[#757575] {% endif %}" href="{% url 'meeting_create' %}"> <!-- Замените 'create_view_name' -->
+      <div class="flex h-8 items-center justify-center" data-icon="Plus" data-size="24px" data-weight="regular">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+          <path d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"></path>
+        </svg>
+      </div>
+      <p class="text-xs font-medium leading-normal tracking-[0.015em]">Создать</p>
+    </a>
+    <a class="flex flex-1 flex-col items-center justify-end gap-1 rounded-full {% if active_page == 'profile' %}text-[#141414] font-medium {% else %} text-[#757575] {% endif %}" href="{% url 'profile_view' %}"> <!-- Замените 'profile_view_name' -->
+      <div class="flex h-8 items-center justify-center" data-icon="User" data-size="24px" data-weight="fill">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+          <path d="M230.93,220a8,8,0,0,1-6.93,4H32a8,8,0,0,1-6.92-12c15.23-26.33,38.7-45.21,66.09-54.16a72,72,0,1,1,73.66,0c27.39,8.95,50.86,27.83,66.09,54.16A8,8,0,0,1,230.93,220Z"></path>
+        </svg>
+      </div>
+      <p class="text-xs font-medium leading-normal tracking-[0.015em]">Профиль</p>
+    </a>
+  </div>
+  <div class="h-5 bg-white"></div> <!-- Отступ под меню -->
+</div>

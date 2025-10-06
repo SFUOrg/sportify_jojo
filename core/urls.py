@@ -19,7 +19,8 @@ from django.urls import path, include, re_path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('sf_auth.urls')),
+    path('login/', include('sf_auth.urls')),
+    path('', include('sf_meetings.urls')),
     path('api-auth/', include('rest_framework.urls')),
     re_path('^social/', include('social_django.urls', namespace='social')),
     re_path(r'^auth/', include('drf_social_oauth2.urls', namespace='drf')),
