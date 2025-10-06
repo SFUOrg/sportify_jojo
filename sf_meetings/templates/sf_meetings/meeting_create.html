@@ -1,7 +1,7 @@
 <!-- templates/meetings/create_meeting.html -->
 {% extends 'base.html' %}
 
-{% block title %}Создать мероприятие - Stitch Design{% endblock %}
+{% block title %}Создать мероприятие{% endblock %}
 
 {% block content %}
 <div class="relative flex h-auto min-h-screen w-full flex-col bg-white justify-between group/design-root overflow-x-hidden">
@@ -12,7 +12,7 @@
           <path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"></path>
         </svg>
       </a>
-      <h2 class="text-[#141414] text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-12">Создать</h2>
+      <h2 class="text-[#141414] text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-12">Создать мероприятие</h2>
       <div class="w-12"></div> <!-- Пустое пространство для выравнивания -->
     </div>
 
@@ -104,7 +104,6 @@
     input[type="datetime-local"],
     textarea,
     select {
-      /* Уже определены в Tailwind через классы */
     }
     /* Ошибки */
     .text-red-500 {
