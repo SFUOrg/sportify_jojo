@@ -1,8 +1,75 @@
+<!-- templates/profile.html -->
 {% extends 'base.html' %}
 
-{% block title %}Profile{% endblock %}
+{% block title %}Профиль - {{ profile.user.username }}{% endblock %}
 
 {% block content %}
-  <h1>The profile page may be developed soon.</h1>
-  <!-- Ваш контент для страницы карты -->
+<div class="relative flex h-auto min-h-screen w-full flex-col bg-white justify-between group/design-root overflow-x-hidden"
+     style="--select-button-svg: url('data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724px%27 height=%2724px%27 fill=%27rgb(117,117,117)%27 viewBox=%270 0 256 256%27%3e%3cpath d=%27M181.66,170.34a8,8,0,0,1,0,11.32l-48,48a8,8,0,0,1-11.32,0l-48-48a8,8,0,0,1,11.32-11.32L128,212.69l42.34-42.35A8,8,0,0,1,181.66,170.34Zm-96-84.68L128,43.31l42.34,42.35a8,8,0,0,0,11.32-11.32l-48-48a8,8,0,0,0-11.32,0l-48,48A8,8,0,0,0,85.66,85.66Z%27%3e%3c/path%3e%3c/svg%3e'); font-family: Lexend, &quot;Noto Sans&quot;, sans-serif;">
+  <div>
+    <div class="flex items-center bg-white p-4 pb-2 justify-between">
+      
+      <h2 class="text-[#141414] text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center ">Профиль</h2>
+    </div>
+    <div class="flex p-4 @container">
+      <div class="flex w-full flex-col gap-4 items-center">
+        <div class="flex gap-4 flex-col items-center">
+          <!-- Отображение фото профиля -->
+          <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full min-h-32 w-32"
+               style='background-image: url("{% if profile.profile_photo %}{{ profile.profile_photo.url }}{% else %}https://via.placeholder.com/128x128?text=No+Photo{% endif %}");'>
+          </div>
+          <div class="flex flex-col items-center justify-center justify-center">
+            <!-- Отображение имени пользователя -->
+            <p class="text-[#141414] text-[22px] font-bold leading-tight tracking-[-0.015em] text-center">
+              {{ profile.user.first_name|default:profile.user.username }} {{ profile.user.last_name|default:"" }}
+            </p>
+            <!-- Отображение возраста и пола (псевдо-логика, так как пола нет в модели) -->
+            <p class="text-[#757575] text-base font-normal leading-normal text-center">
+              {% if profile.birthday %}
+                {{ profile.birthday|timesince|truncatechars:2 }} · 
+              {% else %}
+                ? · 
+              {% endif %}
+              {% comment %} Пол отсутствует в модели Profile. Можно добавить поле или использовать условие. {% endcomment %}
+              {% if profile.user.profile.second_name %} {{ profile.user.profile.second_name }} {% else %} Не указан {% endif %} <!-- Пример использования другого поля -->
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <h3 class="text-[#141414] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Интересы (Виды спорта)</h3>
+    <div class="flex gap-3 p-3 flex-wrap pr-4">
+      {% for sport in interested_sports %}
+        <div class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-[#f2f2f2] pl-4 pr-4">
+          <p class="text-[#141414] text-sm font-medium leading-normal">{{ sport.name }}</p>
+        </div>
+      {% empty %}
+        <p class="text-[#757575] text-base font-normal leading-normal px-4">Пока не указаны интересы.</p>
+      {% endfor %}
+    </div>
+
+    <!-- Пример: Отображение основного вида спорта -->
+    {% if profile.main_sport %}
+      <h3 class="text-[#141414] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Основной вид спорта</h3>
+      <div class="flex gap-3 p-3 flex-wrap pr-4">
+        <div class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-[#e0e0e0] pl-4 pr-4">
+          <p class="text-[#141414] text-sm font-medium leading-normal">{{ profile.main_sport.name }}</p>
+        </div>
+      </div>
+    {% endif %}
+
+    <h3 class="text-[#141414] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Описание</h3>
+    <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+      <p class="w-full p-2 border border-[#e0e0e0] bg-white rounded-lg min-h-[40px]"> {{ profile.description|default:"Нет описания" }} </p>
+    </div>
+
+    
+    <div class="flex px-4 py-3">
+      <a href="" 
+         class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 flex-1 bg-[#808080] text-white text-base font-bold leading-normal tracking-[0.015em]">
+        <span class="truncate">Редактировать</span>
+      </a>
+    </div>
+  </div>
+</div>
 {% endblock %}
