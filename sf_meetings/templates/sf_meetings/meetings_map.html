@@ -1,8 +1,96 @@
+<!-- templates/map.html -->
 {% extends 'base.html' %}
 
-{% block title %}Map Meetings{% endblock %}
+{% block title %}Карта Встреч - Stitch Design{% endblock %}
 
 {% block content %}
-  <h1>The map page may be developed soon.</h1>
-  <!-- Ваш контент для страницы карты -->
+<div class="relative h-screen bg-white group/design-root overflow-hidden" style='font-family: Lexend, "Noto Sans", sans-serif;'>
+  <!-- Контейнер для заголовка -->
+  <div class="absolute top-0 left-0 right-0 z-20 bg-white p-4 pb-2 flex items-center justify-between">
+    <h2 class="text-[#141414] text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pl-12">Карта встреч!</h2>
+    <div class="flex w-12 items-center justify-end">
+      <!-- Кнопка списка убрана -->
+    </div>
+  </div>
+
+  <!-- Контейнер для карты -->
+  <div id="map" class="absolute top-[62px] left-0 right-0 bottom-[75px] z-0"></div> <!-- Высота: от нижней границы заголовка до верхней границы нижнего меню -->
+
+  <!-- Кнопки управления поверх карты -->
+  <div class="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 flex flex-col gap-1">
+    <button class="flex size-10 items-center justify-center rounded-lg bg-white shadow-[0_2px_4px_rgba(0,0,0,0.1)]" onclick="map.zoomIn()">
+      <div class="text-[#141414]" data-icon="Plus" data-size="24px" data-weight="regular">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+          <path d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"></path>
+        </svg>
+      </div>
+    </button>
+    <button class="flex size-10 items-center justify-center rounded-lg bg-white shadow-[0_2px_4px_rgba(0,0,0,0.1)]" onclick="map.zoomOut()">
+      <div class="text-[#141414]" data-icon="Minus" data-size="24px" data-weight="regular">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+          <path d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128Z"></path>
+        </svg>
+      </div>
+    </button>
+  </div>
+  <div class="absolute right-4 bottom-32 z-10"> <!-- 16 = 4 * 4 = ~ pb-4 от нижнего меню -->
+    <button class="flex size-10 items-center justify-center rounded-lg bg-white shadow-[0_2px_4px_rgba(0,0,0,0.1)]" onclick="map.locate({setView: true})">
+      <div class="text-[#141414]" data-icon="NavigationArrow" data-size="24px" data-weight="regular">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256" transform="scale(-1, 1)">
+          <path d="M229.33,98.21,53.41,33l-.16-.05A16,16,0,0,0,32.9,53.25a1,1,0,0,0,.05.16L98.21,229.33A15.77,15.77,0,0,0,113.28,240h.3a15.77,15.77,0,0,0,15-11.29l23.56-76.56,76.56-23.56a16,16,0,0,0,.62-30.38ZM224,113.3l-76.56,23.56a16,16,0,0,0-10.58,10.58L113.3,224h0l-.06-.17L48,48l175.82,65.22.16.06Z"></path>
+        </svg>
+      </div>
+    </button>
+  </div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+<script>
+    // Инициализация карты
+    var map = L.map('map').setView([57.75, 36.615], 10); // Центр по умолчанию
+
+    // Добавление слоя тайлов OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Функция для добавления маркеров
+    function addMarkersToMap(meetings) {
+        meetings.forEach(function(meeting) {
+            var marker = L.marker([meeting.latitude, meeting.longitude]).addTo(map);
+            marker.bindPopup(`
+                <b>${meeting.title}</b><br>
+                ${meeting.date_time}<br>
+                ${meeting.description ? meeting.description : 'Без описания'}
+            `);
+        });
+    }
+
+    // Данные о встречах из Django-контекста (преобразованные в JSON)
+    var meetingsData = [
+        {% for meeting in meetings %}
+        {
+            id: {{ meeting.id }},
+            title: "{{ meeting.title|escapejs }}",
+            description: "{{ meeting.description|default:''|escapejs }}",
+            date_time: "{{ meeting.date_time|date:'d.m.Y H:i' }}",
+            latitude: {{ meeting.latitude }},
+            longitude: {{ meeting.longitude }}
+        }{% if not forloop.last %},{% endif %}
+        {% endfor %}
+    ];
+
+    // Добавляем маркеры на карту
+    if (meetingsData.length > 0) {
+        // Устанавливаем центр на первую встречу
+        map.setView([meetingsData[0].latitude, meetingsData[0].longitude], 13);
+        addMarkersToMap(meetingsData);
+    }
+
+    
+</script>
+
+
 {% endblock %}

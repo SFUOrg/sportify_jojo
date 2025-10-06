@@ -1,8 +1,10 @@
 from django.shortcuts import render
-
+from sf_meetings.models import Meeting
 def map_view(request):
+    meetings = Meeting.objects.all() # Получаем все встречи
     context = {
-        'active_page': 'map', # Указываем, что это страница 'map'
+        'active_page': 'map',
+        'meetings': meetings, # Передаём в контекст
     }
     return render(request, 'sf_meetings/meetings_map.html', context)
 
