@@ -1,8 +1,114 @@
+<!-- templates/meetings/create_meeting.html -->
 {% extends 'base.html' %}
 
-{% block title %}Create Meeting{% endblock %}
+{% block title %}Создать мероприятие - Stitch Design{% endblock %}
 
 {% block content %}
-  <h1>The create meeting page may be developed soon.</h1>
-  <!-- Ваш контент для страницы карты -->
+<div class="relative flex h-auto min-h-screen w-full flex-col bg-white justify-between group/design-root overflow-x-hidden">
+  <div>
+    <div class="flex items-center bg-white p-4 pb-2 justify-between">
+      <a href="" class="text-[#141414] flex size-12 shrink-0 items-center" data-icon="X" data-size="24px" data-weight="regular">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+          <path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"></path>
+        </svg>
+      </a>
+      <h2 class="text-[#141414] text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-12">Создать</h2>
+      <div class="w-12"></div> <!-- Пустое пространство для выравнивания -->
+    </div>
+
+    <form method="post" class="w-full">
+      {% csrf_token %}
+
+      <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+        <label class="flex flex-col min-w-40 flex-1">
+          <select name="{{ form.sport_category.name }}" id="{{ form.sport_category.id_for_label }}"
+                  class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#141414] focus:outline-0 focus:ring-0 border border-[#e0e0e0] bg-white focus:border-[#e0e0e0] h-14 bg-[image:--select-button-svg] placeholder:text-[#757575] p-[15px] text-base font-normal leading-normal">
+            <option value="" {% if not form.sport_category.value %}selected{% endif %}>Вид спорта</option>
+            {% for choice in form.sport_category.field.queryset %}
+                <option value="{{ choice.pk }}" {% if choice.pk|stringformat:"s" == form.sport_category.value %}selected{% endif %}>{{ choice.name }}</option> <!-- Предполагаем, что у SportCategory есть поле name -->
+            {% endfor %}
+          </select>
+          {% if form.sport_category.errors %}
+            <div class="text-red-500 text-xs mt-1">{{ form.sport_category.errors }}</div>
+          {% endif %}
+        </label>
+      </div>
+
+      <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+        <label class="flex flex-col min-w-40 flex-1">
+          {{ form.title }}
+          {% if form.title.errors %}
+            <div class="text-red-500 text-xs mt-1">{{ form.title.errors }}</div>
+          {% endif %}
+        </label>
+      </div>
+
+      <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+        <label class="flex flex-col min-w-40 flex-1">
+          {{ form.description }}
+          {% if form.description.errors %}
+            <div class="text-red-500 text-xs mt-1">{{ form.description.errors }}</div>
+          {% endif %}
+        </label>
+      </div>
+
+      <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+        <label class="flex flex-col min-w-40 flex-1">
+          {{ form.latitude }}
+          {% if form.latitude.errors %}
+            <div class="text-red-500 text-xs mt-1">{{ form.latitude.errors }}</div>
+          {% endif %}
+          <span class="text-xs text-gray-500 mt-1">Широта</span>
+        </label>
+      </div>
+
+      <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+        <label class="flex flex-col min-w-40 flex-1">
+          {{ form.longitude }}
+          {% if form.longitude.errors %}
+            <div class="text-red-500 text-xs mt-1">{{ form.longitude.errors }}</div>
+          {% endif %}
+          <span class="text-xs text-gray-500 mt-1">Долгота</span>
+        </label>
+      </div>
+
+      <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+        <label class="flex flex-col min-w-40 flex-1">
+          {{ form.date_time }}
+          {% if form.date_time.errors %}
+            <div class="text-red-500 text-xs mt-1">{{ form.date_time.errors }}</div>
+          {% endif %}
+        </label>
+      </div>
+
+      <div class="flex px-4 py-3">
+        <button type="submit"
+                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 flex-1 bg-[#808080] text-white text-base font-bold leading-normal tracking-[0.015em]">
+          <span class="truncate">Создать</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+  <style>
+    /* Подставляем SVG иконку для select */
+    .group\/design-root {
+      --select-button-svg: url('data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724px%27 height=%2724px%27 fill=%27rgb(117,117,117)%27 viewBox=%270 0 256 256%27%3e%3cpath d=%27M181.66,170.34a8,8,0,0,1,0,11.32l-48,48a8,8,0,0,1-11.32,0l-48-48a8,8,0,0,1,11.32-11.32L128,212.69l42.34-42.35A8,8,0,0,1,181.66,170.34Zm-96-84.68L128,43.31l42.34,42.35a8,8,0,0,0,11.32-11.32l-48-48a8,8,0,0,0-11.32,0l-48,48A8,8,0,0,0,85.66,85.66Z%27%3e%3c/path%3e%3c/svg%3e');
+    }
+    /* Стили для полей формы */
+    input[type="text"],
+    input[type="number"],
+    input[type="datetime-local"],
+    textarea,
+    select {
+      /* Уже определены в Tailwind через классы */
+    }
+    /* Ошибки */
+    .text-red-500 {
+      color: #ef4444; /* tailwind red-500 */
+    }
+  </style>
 {% endblock %}

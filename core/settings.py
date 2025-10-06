@@ -25,6 +25,9 @@ SECRET_KEY = 'django-insecure-3^*1d-a#c*5j^=!%k!8!dh807c8!jxwzj+)*5-ge3q5qtc4_2$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://heartily-versatile-salmon.cloudpub.ru',
+]
 
 ALLOWED_HOSTS = ["heartily-versatile-salmon.cloudpub.ru", "localhost", "127.0.0.1"]
 

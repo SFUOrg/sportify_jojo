@@ -18,10 +18,3 @@ class SocialAuthExceptionMiddleware:
             # Перенаправляем на нужную страницу
             return redirect('profile_view') # или другую страницу
         return None # Возвращаем None, чтобы обработка продолжилась стандартно
-
-# Добавьте этот middleware в settings.py:
-# MIDDLEWARE = [
-#     # ... другие middleware ...
-#     'myapp.exception_middleware.SocialAuthExceptionMiddleware',
-#     # ... остальные ...
-# ]
