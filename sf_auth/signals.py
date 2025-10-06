@@ -1,6 +1,8 @@
 # sf_auth/signals.py
 import os
 from django.db.models.signals import post_save, post_delete
+#from social_django.signals import auth_already_associated
+
 from django.dispatch import receiver
 from django.contrib.auth.models import User
 from .models import Profile, ProfilePhoto
@@ -33,3 +35,10 @@ def delete_profile_main_photo_file(sender, instance, **kwargs):
     if instance.profile_photo:
         if os.path.isfile(instance.profile_photo.path):
             os.remove(instance.profile_photo.path)
+
+# @receiver(auth_already_associated)
+# def handle_auth_already_associated(sender, request, backend, *args, **kwargs):
+#     # Показываем сообщение пользователю
+#     messages.error(request, "Этот аккаунт Telegram уже связан с другим пользователем.")
+#     # Перенаправляем на страницу входа или профиля
+#     return redirect('login')
