@@ -13,12 +13,12 @@ class Command(BaseCommand):
         # Найдём или создадим тестового пользователя (организатора)
         # Для простоты, возьмём первого пользователя или создадим тестового
         test_user, created = User.objects.get_or_create(
-            username='test_organizer',
-            defaults={'email': 'test@example.com', 'password': 'pbkdf2_sha256$...'} # Пароль можно не указывать или захешировать
+            username='test_organizer1',
+            defaults={'email': 'test1@example.com', 'password': 'pbkdf2_sha256$...'} # Пароль можно не указывать или захешировать
         )
         if created:
             # Установим простой пароль для тестового пользователя, если он создан
-            test_user.set_password('testpass123')
+            test_user.set_password('testpass1234')
             test_user.save()
             self.stdout.write(self.style.SUCCESS(f'Создан тестовый организатор: {test_user.username} (пароль: testpass123)'))
 
