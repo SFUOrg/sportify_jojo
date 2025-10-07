@@ -53,6 +53,31 @@ def join_meeting_view(request, meeting_id):
 
     return redirect('meeting_detail', pk=meeting.id)
 
+@login_required # Убедитесь, что пользователь аутентифицирован
+def my_meetings_view(request):
+    """
+    Представление для отображения встреч, где пользователь является
+    организатором или участником.
+    """
+    user = request.user
+
+    # Встречи, где пользователь - организатор
+    organized_meetings = Meeting.objects.filter(organizer=user).order_by('date_time')
+
+    # Встречи, где пользователь - участник (но НЕ организатор)
+    participating_meetings = Meeting.objects.filter(
+        participants=user
+    ).exclude( # Исключаем встречи, где пользователь является организатором
+        organizer=user
+    ).order_by('date_time')
+
+    context = {
+        'organized_meetings': organized_meetings,
+        'participating_meetings': participating_meetings,
+        'active_page': 'my_meetings', 
+    }
+    return render(request, 'sf_meetings/my_meetings.html', context)
+
 # Или функциональное представление:
 def meeting_detail_view(request, pk): # pk - это primary key встречи
     meeting = get_object_or_404(Meeting, pk=pk)
