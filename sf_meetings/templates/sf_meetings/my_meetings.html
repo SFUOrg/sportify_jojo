@@ -1,0 +1,70 @@
+<!-- templates/my_meetings.html -->
+{% extends 'base.html' %}
+
+{% block title %}Мои Встречи{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto p-4">
+  <h1 class="text-2xl font-bold text-gray-900 mb-6">Мои Встречи</h1>
+
+  <!-- Встречи, где пользователь - организатор -->
+  <section class="mb-8">
+    <h2 class="text-xl font-semibold text-gray-800 mb-4 border-b pb-2">Организованные встречи</h2>
+    {% if organized_meetings %}
+      <ul class="space-y-4">
+        {% for meeting in organized_meetings %}
+          <li class="bg-white p-4 rounded-lg shadow flex justify-between items-center">
+            <div>
+              <a href="{% url 'meeting_detail' pk=meeting.id %}" class="text-lg font-medium text-blue-600 hover:underline">
+                {{ meeting.title }}
+              </a>
+              <p class="text-sm text-gray-600">
+                {{ meeting.date_time|date:"j F Y в H:i" }}
+              </p>
+              <p class="text-xs text-gray-500 mt-1">
+                {% if meeting.sport_category %}
+                  {{ meeting.sport_category.name }} |
+                {% endif %}
+                Участников: {{ meeting.participants.count }}
+              </p>
+            </div>
+            <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">Организатор</span>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="text-gray-600">Вы не организовали ни одной встречи.</p>
+    {% endif %}
+  </section>
+
+  <!-- Встречи, где пользователь - участник -->
+  <section>
+    <h2 class="text-xl font-semibold text-gray-800 mb-4 border-b pb-2">Участвую в</h2>
+    {% if participating_meetings %}
+      <ul class="space-y-4">
+        {% for meeting in participating_meetings %}
+          <li class="bg-white p-4 rounded-lg shadow flex justify-between items-center">
+            <div>
+              <a href="{% url 'meeting_detail' pk=meeting.id %}" class="text-lg font-medium text-blue-600 hover:underline">
+                {{ meeting.title }}
+              </a>
+              <p class="text-sm text-gray-600">
+                {{ meeting.date_time|date:"j F Y в H:i" }}
+              </p>
+              <p class="text-xs text-gray-500 mt-1">
+                {% if meeting.sport_category %}
+                  {{ meeting.sport_category.name }} |
+                {% endif %}
+                Участников: {{ meeting.participants.count }}
+              </p>
+            </div>
+            <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">Участник</span>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="text-gray-600">Вы не состоите в участниках ни одной встречи.</p>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}

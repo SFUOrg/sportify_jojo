@@ -4,7 +4,8 @@
 {% block title %}Создать мероприятие{% endblock %}
 
 {% block content %}
-<div class="relative flex h-auto min-h-screen w-full flex-col bg-white justify-between group/design-root overflow-x-hidden">
+
+<div class="relative flex h-auto min-h-screen max-w-4xl mx-auto flex-col bg-white justify-between group/design-root overflow-x-hidden pb-4">
   <div>
     <div class="flex items-center bg-white p-4 pb-2 justify-between">
       <a href="" class="text-[#141414] flex size-12 shrink-0 items-center" data-icon="X" data-size="24px" data-weight="regular">
@@ -19,7 +20,7 @@
     <form method="post" class="w-full">
       {% csrf_token %}
 
-      <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+      <div class="flex  flex-wrap items-end gap-4 px-4 py-3">
         <label class="flex flex-col min-w-40 flex-1">
           <select name="{{ form.sport_category.name }}" id="{{ form.sport_category.id_for_label }}"
                   class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#141414] focus:outline-0 focus:ring-0 border border-[#e0e0e0] bg-white focus:border-[#e0e0e0] h-14 bg-[image:--select-button-svg] placeholder:text-[#757575] p-[15px] text-base font-normal leading-normal">
@@ -34,7 +35,7 @@
         </label>
       </div>
 
-      <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+      <div class="flex  flex-wrap items-end gap-4 px-4 py-3">
         <label class="flex flex-col min-w-40 flex-1">
           {{ form.title }}
           {% if form.title.errors %}
@@ -43,7 +44,7 @@
         </label>
       </div>
 
-      <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+      <div class="flex  flex-wrap items-end gap-4 px-4 py-3">
         <label class="flex flex-col min-w-40 flex-1">
           {{ form.description }}
           {% if form.description.errors %}
@@ -52,7 +53,7 @@
         </label>
       </div>
 
-      <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+      <div class="flex flex-wrap items-end gap-4 px-4 py-3">
         <label class="flex flex-col min-w-40 flex-1">
           {{ form.latitude }}
           {% if form.latitude.errors %}
@@ -62,7 +63,7 @@
         </label>
       </div>
 
-      <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+      <div class="flex flex-wrap items-end gap-4 px-4 py-3">
         <label class="flex flex-col min-w-40 flex-1">
           {{ form.longitude }}
           {% if form.longitude.errors %}
@@ -72,7 +73,7 @@
         </label>
       </div>
 
-      <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+      <div class="flex flex-wrap items-end gap-4 px-4 py-3">
         <label class="flex flex-col min-w-40 flex-1">
           {{ form.date_time }}
           {% if form.date_time.errors %}
@@ -83,7 +84,7 @@
 
       <div class="flex px-4 py-3">
         <button type="submit"
-                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 flex-1 bg-[#808080] text-white text-base font-bold leading-normal tracking-[0.015em]">
+                class="flex min-w-[84px]  cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 flex-1 bg-[#808080] text-white text-base font-bold leading-normal tracking-[0.015em]">
           <span class="truncate">Создать</span>
         </button>
       </div>
