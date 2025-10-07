@@ -49,47 +49,30 @@
 
 <script>
     // Инициализация карты
-    var map = L.map('map').setView([57.75, 36.615], 10); // Центр по умолчанию
+    var map = L.map('map').setView([55.752, 37.605], 13); // Центр по умолчанию
 
     // Добавление слоя тайлов OpenStreetMap
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
+    // Получаем данные встреч из Django-контекста
+    var meetingsData = {{ meetings_json|safe }}; // |safe позволяет вставить JSON напрямую
+
     // Функция для добавления маркеров
     function addMarkersToMap(meetings) {
         meetings.forEach(function(meeting) {
             var marker = L.marker([meeting.latitude, meeting.longitude]).addTo(map);
             marker.bindPopup(`
-                <b>${meeting.title}</b><br>
+                <a href="${meeting.detail_url}"><b>${meeting.title}</b></a><br>
                 ${meeting.date_time}<br>
-                ${meeting.description ? meeting.description : 'Без описания'}
+                ${meeting.description}
             `);
         });
     }
 
-    // Данные о встречах из Django-контекста (преобразованные в JSON)
-    var meetingsData = [
-        {% for meeting in meetings %}
-        {
-            id: {{ meeting.id }},
-            title: "{{ meeting.title|escapejs }}",
-            description: "{{ meeting.description|default:''|escapejs }}",
-            date_time: "{{ meeting.date_time|date:'d.m.Y H:i' }}",
-            latitude: {{ meeting.latitude }},
-            longitude: {{ meeting.longitude }}
-        }{% if not forloop.last %},{% endif %}
-        {% endfor %}
-    ];
-
-    // Добавляем маркеры на карту
-    if (meetingsData.length > 0) {
-        // Устанавливаем центр на первую встречу
-        map.setView([meetingsData[0].latitude, meetingsData[0].longitude], 13);
-        addMarkersToMap(meetingsData);
-    }
-
-    
+    // Вызываем функцию с данными
+    addMarkersToMap(meetingsData);
 </script>
 
 

@@ -51,6 +51,19 @@ class Meeting(models.Model):
     def __str__(self):
         return f"{self.title} ({self.date_time.strftime('%d.%m.%Y %H:%M')})"
 
+    def save(self, *args, **kwargs):
+        # Проверяем, является ли это новой записью
+        is_new_meeting = self.pk is None
+
+        # Вызываем родительский метод save() для сохранения объекта
+        super().save(*args, **kwargs)
+
+        # Если это новая встреча и у неё есть организатор
+        if is_new_meeting and self.organizer:
+            # Добавляем организатора в список участников
+            # add() автоматически избегает дубликатов
+            self.participants.add(self.organizer)
+
     class Meta:
         ordering = ['date_time']
         verbose_name = "Встреча"

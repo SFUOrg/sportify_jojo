@@ -9,5 +9,7 @@ urlpatterns = [
     path('meetings-list/', views.list_view, name='meetings_list'),
     path('meeting-create/', views.create_view, name='meeting_create'),
     path('profile/', views.profile_view, name='profile_view'),
+    path('meeting/<int:meeting_id>/join/', views.join_meeting_view, name='join_meeting'),
+    path('meeting/<int:pk>/', views.meeting_detail_view, name='meeting_detail'), # Или views.meeting_detail_view
     # другие URL...
 ]
