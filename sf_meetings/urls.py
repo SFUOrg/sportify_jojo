@@ -4,6 +4,8 @@ from django.views.generic import RedirectView
 from . import views
 
 urlpatterns = [
+    path('profile/', profile_views.profile_view, name='profile'),
+    path('profile/edit/', profile_views.edit_profile, name='profile_edit'),
     re_path(r'^$', RedirectView.as_view(url='login/telegram/', permanent=False)), #надо потом добавть landing page
     path('meetings-map/', views.map_view, name='meetings_map'), # Имя должно совпадать с используемым в href
     path('meetings-list/', views.list_view, name='meetings_list'),
