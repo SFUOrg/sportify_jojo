@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Sportify JoJo — Главная страница</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link
+      rel="stylesheet"
+      as="style"
+      onload="this.rel='stylesheet'"
+      href="https://fonts.googleapis.com/css2?display=swap&amp;family=Lexend%3Awght%40400%3B500%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <style>
+        /* Fallback font family to keep look consistent with login.html */
+        body { font-family: Lexend, "Noto Sans", Arial, sans-serif; }
+    </style>
+</head>
+<body class="bg-white text-[#141414] min-h-screen flex flex-col">
+    <!-- Header (left: sporfity, right: Login) -->
+    <header class="w-full bg-white border-b border-gray-100">
+        <div class="max-w-4xl mx-auto flex items-center justify-between px-4 py-4">
+            <div class="flex items-center">
+                <a href="/" class="text-[#141414] text-lg font-bold leading-tight tracking-[-0.015em]">sporfity</a>
+            </div>
+            <div>
+                <a href="#" class="inline-flex items-center px-4 py-2 bg-[#141414] text-white text-sm font-medium rounded-md hover:opacity-90">Login</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1 w-full">
+        <div class="max-w-3xl mx-auto bg-white p-8 rounded-md shadow mt-8">
+            <h1 class="text-2xl font-bold text-[#141414] mb-4">Добро пожаловать в <span class="text-[#3182ce]">Sportify JoJo</span></h1>
+            <p class="text-base text-[#4a5568] leading-relaxed mb-4">
+                <strong>Sportify JoJo</strong> — это платформа для организации и поиска спортивных встреч и мероприятий.
+                Здесь вы можете легко найти единомышленников для совместных тренировок, игр и активного отдыха.
+            </p>
+            <p class="text-base text-[#4a5568] leading-relaxed mb-4">
+                Проект создан для того, чтобы объединять людей, увлечённых спортом, помогать им находить новые знакомства и поддерживать здоровый образ жизни.
+            </p>
+            <p class="text-base text-[#4a5568] leading-relaxed">
+                Присоединяйтесь, создавайте свои встречи, приглашайте друзей и находите новые команды!
+            </p>
+        </div>
+    </main>
+
+</body>
+</html>
