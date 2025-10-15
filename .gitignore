@@ -4,4 +4,5 @@ venv/
 env/
 .venv/
 .env
+.ai/
 profile_photos/
