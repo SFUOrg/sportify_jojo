@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', include('sf_auth.urls')),
     path('', include('sf_meetings.urls')),
+    path('api/meetings/', include('sf_meetings.api_urls')),
     path('api-auth/', include('rest_framework.urls')),
     re_path('^social/', include('social_django.urls', namespace='social')),
     re_path(r'^auth/', include('drf_social_oauth2.urls', namespace='drf')),

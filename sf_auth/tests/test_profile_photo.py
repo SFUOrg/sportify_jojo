@@ -12,7 +12,7 @@ class ProfilePhotoModelTest(TestCase):
             username='testuser',
             password='password123'
         )
-        self.profile = Profile.objects.create(user=self.user)
+        self.profile, created = Profile.objects.get_or_create(user=self.user)
 
     def test_profile_photo_creation(self):
         """Тест: создание фото профиля с обязательными полями"""
