@@ -50,7 +50,7 @@ class Meeting(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     
     # Field to store unique meeting ID for joining purposes
-    meeting_id = models.CharField(max_length=100, blank=True, default='')
+    meeting_id = models.CharField(max_length=100, unique=True, blank=True, default='')
 
     def save(self, *args, **kwargs):
         # Automatically generate meeting_id if it doesn't exist
